@@ -1,0 +1,16 @@
+body {
+  background-color: #000;
+}
+
+* {
+  color: #fff;
+}
+
+.section {
+  padding: 30px;
+  &__title {
+    font-size: 24px;
+    font-family: $font-title;
+    text-transform: uppercase;
+  }
+}
