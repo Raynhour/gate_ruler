@@ -1,7 +1,9 @@
 <template lang="pug">
 section(
-  :style="{backgroundImage: `url(${require('@/assets/img/default.jpg')})`}"
+  
 ).game
+  .game__bg(
+  )
   preloader(v-if="loading" :data-test="DATA_TEST.DUEL.PRELOADER")
   .duel(v-if="duel")
     .field {{ duel }}
@@ -51,6 +53,26 @@ export default defineComponent({
 
 .game {
   height: 100vh;
-  background-size: cover;
+  &__bg {
+    // width: 100vw;
+    // height: 100vh;
+    // top: 50%;
+    // left: 50%;
+    // margin-top: -200vh;
+    // margin-left: -200vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-size: cover;
+    // animation: rotate 2000s linear infinite;
+  }
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(-360deg);
+  }
 }
 </style>

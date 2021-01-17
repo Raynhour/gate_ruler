@@ -3,7 +3,7 @@ type Error = {
   message: string
 }
 
-type HandleError = {
+export type HandleError = {
   status: string
   error: Error
   invalid_fields?: any
@@ -18,10 +18,11 @@ type RejectedResponse = {
   message?: string
 }
 
-export default class ErrorHandler {
+export default class ErrorHandler extends Error {
   private error: RejectedResponse
 
   constructor(error: RejectedResponse) {
+    super()
     this.error = error
   }
 
@@ -94,5 +95,28 @@ export default class ErrorHandler {
       res.error.code = this.error.response.status
     }
     return res
+  }
+}
+
+type invalidFields = {
+  [key: string]: string | invalidFields
+}
+export class ErrorFields {
+  private invalidFields: invalidFields
+  constructor(invalidFields: invalidFields) {
+    this.invalidFields = invalidFields
+  }
+
+  error(): RejectedResponse {
+    return {
+      response: {
+        data: {
+          invalid_fields: this.invalidFields,
+          message: 'Invalid fields'
+        },
+        status: -1,
+        statusText: 'Invalid fields'
+      }
+    }
   }
 }

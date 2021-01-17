@@ -5,23 +5,34 @@ section.main home
     button(@click="login").enter__button LOGIN
 </template>
 
-<script>
+<script lang="ts">
+import { Toaster } from '@/utils/types'
+import { defineComponent, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import ROUTER_NAMES from '../router/router-names'
-export default {
+export default defineComponent({
   setup() {
     const router = useRouter()
+    const notify = inject<Toaster>('toast')
+    if (!notify) {
+      throw new Error('not inject toast')
+    }
     function login() {
-      router.push({
-        name: ROUTER_NAMES.LOBBIES
+      notify?.clear()
+      notify?.error('Not valid', {
+        position: 'bottom'
       })
+      // return
+      // router.push({
+      //   name: ROUTER_NAMES.LOBBIES
+      // })
     }
 
     return {
       login
     }
   }
-}
+})
 </script>
 
 <style lang="scss">

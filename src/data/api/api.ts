@@ -41,4 +41,17 @@ export default class Api implements ApiContractor {
     const res: Promise<any> = await this.request(url, { ...config, ..._config })
     return res
   }
+
+  async post<Data, Res>(
+    url: string,
+    data: Data,
+    config?: Config
+  ): Promise<Res> {
+    const _config = {
+      method: 'post',
+      data: data
+    }
+    const res: Promise<Res> = await this.request(url, { ...config, ..._config })
+    return res
+  }
 }
