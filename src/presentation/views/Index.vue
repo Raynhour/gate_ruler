@@ -2,7 +2,8 @@
 section.main home
   img(:src="require('@/assets/logo.png')").main__logo
   div.enter
-    button(@click="login").enter__button LOGIN
+    login-form
+    //- button.enter__button LOGIN
 </template>
 
 <script lang="ts">
@@ -10,6 +11,7 @@ import { Toaster } from '@/utils/types'
 import { defineComponent, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import ROUTER_NAMES from '../router/router-names'
+import LoginForm from '../components/auth/Login.vue'
 export default defineComponent({
   setup() {
     const router = useRouter()
@@ -17,20 +19,12 @@ export default defineComponent({
     if (!notify) {
       throw new Error('not inject toast')
     }
-    function login() {
-      notify?.clear()
-      notify?.error('Not valid', {
-        position: 'bottom'
-      })
-      // return
-      // router.push({
-      //   name: ROUTER_NAMES.LOBBIES
-      // })
-    }
 
-    return {
-      login
-    }
+    return {}
+  },
+
+  components: {
+    LoginForm
   }
 })
 </script>

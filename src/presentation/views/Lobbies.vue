@@ -22,7 +22,7 @@ export default defineComponent({
     if (!inj) {
       throw new Error('err')
     }
-    const { list } = UseLobbies(inj.api)
+    const { list } = UseLobbies(inj.api.value)
     return {
       list
     }

@@ -6,8 +6,8 @@ section(
   )
   preloader(v-if="loading" :data-test="DATA_TEST.DUEL.PRELOADER")
   .duel(v-if="duel")
-    .field {{ duel }}
-    Player2
+    Player1(:player="duel.player1" v-if="duel.player1").player2
+    div.divider
     Player1(:player="duel.player1" v-if="duel.player1")
 </template>
 
@@ -29,8 +29,9 @@ export default defineComponent({
     if (!inj) {
       throw new Error('err')
     }
+    console.log(inj)
     const route = useRoute()
-    const game = useGame(inj.api)
+    const game = useGame(inj.api.value)
     game.start(+route.params.id)
 
     return { ...game, DATA_TEST: ref(DATA_TEST) }
@@ -70,6 +71,15 @@ export default defineComponent({
   }
 }
 
+.player2 {
+  transform: rotateX(180deg);
+}
+
+.divider {
+  margin: 30px 0;
+  background-color: $primary;
+  height: 1px;
+}
 @keyframes rotate {
   100% {
     transform: rotate(-360deg);

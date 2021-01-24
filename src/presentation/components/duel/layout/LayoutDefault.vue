@@ -1,14 +1,14 @@
 <template lang="pug">
-div default layout {{ player }}
+div
   div
-    unit-zones(:unitZones="player.zone.attack")
+    defaultZones(:unitZones="player.zone.attack")
     
 </template>
 
 <script lang="ts">
 import { View } from '@/domain/entities/core/view/view'
 import { defineComponent, PropType } from 'vue'
-import UnitZones from '@/presentation/components/duel/zone/UnitZones.vue'
+import DefaultZones from '@/presentation/components/duel/zone/DefaultZones.vue'
 
 export default defineComponent({
   props: {
@@ -19,7 +19,7 @@ export default defineComponent({
   },
 
   components: {
-    UnitZones
+    DefaultZones
   }
 })
 </script>

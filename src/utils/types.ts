@@ -30,7 +30,10 @@ export interface Toaster {
 }
 
 export type InjectionType = {
-  api: ApiContractor
+  api: {
+    value: ApiContractor
+  }
+  // api: ApiContractor
   toast: Toaster
 }
 

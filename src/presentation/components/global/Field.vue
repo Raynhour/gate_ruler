@@ -37,5 +37,9 @@ export default defineComponent({
 
 <style lang="scss">
 .field {
+  color: #000;
+  & input {
+    color: #000;
+  }
 }
 </style>

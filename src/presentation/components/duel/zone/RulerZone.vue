@@ -1,6 +1,6 @@
 <template lang="pug">
 ZoneWrapper(
-  :isDefaultPosition="isDefaultPosition"
+  :isRestPosition="isDefaultPosition"
 )
 </template>
 
