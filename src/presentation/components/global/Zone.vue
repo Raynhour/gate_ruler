@@ -1,18 +1,36 @@
 <template lang="pug">
-.zone 
+.zone(@click="$emit('click')") 
   .zone__round
   .zone__field(
     :class="{'zone__field_default' : isDefaultPosition, 'zone__field_rest': isRestPosition}"
   )
+    .zone__card(
+      :style="{backgroundImage: `url(${card.img})`}"
+    )
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { Card } from "@/domain/entities/core/Card"
+import { defineComponent, PropType } from "vue"
+
+export default defineComponent({
   props: {
     isDefaultPosition: Boolean,
-    isRestPosition: Boolean
+    isRestPosition: Boolean,
+    card: {
+      type: Object as PropType<Card>,
+      default: () => {
+        return {}
+      }
+    }
+  },
+
+  methods: {
+    ales() {
+      alert('true')
+    }
   }
-}
+})
 </script>
 
 <style lang="scss">
@@ -42,12 +60,18 @@ export default {
     border: 1px solid $primary;
     width: 60%;
     height: 75%;
+    
     // &_default {
     //   transform: perspective(50em) rotateX(40deg);
     // }
-    // &_rest {
-    //   transform: perspective(50em) rotateX(40deg) rotateZ(90deg);
-    // }
+    &_rest {
+      transform: rotateZ(90deg);
+    }
   }
+  &__card {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+    }
 }
 </style>

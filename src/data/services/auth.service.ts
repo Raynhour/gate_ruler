@@ -10,7 +10,7 @@ export default class AuthService implements AuthRepo {
   }
 
   public async login<Data, Res>(formData: Data) {
-    const res = await this.api.post<Data, Res>(PATH_AUTH.LOGIN, formData)
+    const res = await this.api.post<Res>(PATH_AUTH.LOGIN, formData)
     return res
   }
 }

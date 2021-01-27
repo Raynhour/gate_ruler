@@ -5,7 +5,7 @@ div.zones
   .zone-wrapper
     defense-zone(:zone="unitZones[1]" :index="1")
   .zone-wrapper
-    unit-zone(:zone="unitZones[1]" :index="1")
+    unit-zone(:zone="unitZones[2]" :index="2")
   .zone-ruler
     ruler-zone(:zone="unitZones[1]" :index="1")
 

@@ -1,7 +1,7 @@
 import { VIEW_LAYOUT } from '@/domain/entities/core/view/view'
 import { Duel } from '@/domain/entities/duel'
-import { CARD_POSITION } from '@/domain/entities/core/Card'
-import { ANY_CARD } from './card.mock'
+import { CARD_POSITION, CARD_TYPE } from '@/domain/entities/core/Card'
+import { ANY_CARD, CARD_MOCK_1 } from './card.mock'
 
 export const duel: Duel = {
   player1: {
@@ -16,9 +16,14 @@ export const duel: Duel = {
     ruler: {},
     zone: {
       attack: {
+        
         1: {
           position: CARD_POSITION.DEFAULT,
-          card: ANY_CARD
+          card: CARD_MOCK_1
+        },
+        2: {
+          position: CARD_POSITION.DEFAULT,
+          card: CARD_MOCK_1
         }
       },
       event: {
@@ -45,7 +50,11 @@ export const duel: Duel = {
       attack: {
         1: {
           position: CARD_POSITION.DEFAULT,
-          card: ANY_CARD
+          card: CARD_MOCK_1
+        },
+        2: {
+          position: CARD_POSITION.DEFAULT,
+          card: CARD_MOCK_1
         }
       },
       event: {

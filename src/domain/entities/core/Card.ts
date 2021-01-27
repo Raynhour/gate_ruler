@@ -9,7 +9,8 @@ export enum CARD_POSITION {
 }
 
 export interface CardAttrs {
-  position: CARD_POSITION
+  position?: CARD_POSITION
+  img?: string
 }
 
 export interface Card extends CardAttrs {

@@ -6,7 +6,7 @@ section(
   )
   preloader(v-if="loading" :data-test="DATA_TEST.DUEL.PRELOADER")
   .duel(v-if="duel")
-    Player1(:player="duel.player1" v-if="duel.player1").player2
+    Player1(:player="duel.player2" v-if="duel.player2").player2
     div.divider
     Player1(:player="duel.player1" v-if="duel.player1")
 </template>
