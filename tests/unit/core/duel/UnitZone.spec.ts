@@ -17,8 +17,7 @@ jest.mock("@/presentation/composables/useGame", () => ({
   changeUnitZone: jest.fn(),
 }));
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-const changeZoneMock = <jest.Mock<typeof changeUnitZone>>changeUnitZone;
+const changeZoneMock = changeUnitZone as jest.Mock;
 
 function createWrapper(
   overrides?: GlobalMountOptions | undefined,
