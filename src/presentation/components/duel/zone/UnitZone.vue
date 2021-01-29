@@ -14,11 +14,13 @@ import CardZone, { Zone } from "@/domain/entities/core/zone";
 import ZoneWrapper from "../../global/Zone.vue";
 import usePositionChoose from "@/presentation/composables/usePositionChoose";
 import { changeUnitZone, PLAYERS } from "@/presentation/composables/useGame";
-import AttackUseCase from "@/domain/usecases/attack.usecase";
+import changeZonePosition from "@/domain/usecases/changeZonePosition.usecase";
 import DuelService from "@/data/services/__mocks__/duel.service";
 import { injection } from "@/utils/vue.utils";
 import INJECTIONS from "@/utils/enums/injections.enum";
 import { InjectionType } from "@/utils/types";
+import ChangeZoneUseCase from "@/domain/usecases/changeZonePosition.usecase";
+import { CARD_POSITION } from "@/domain/entities/core/Card";
 
 export default defineComponent({
   props: {
@@ -44,12 +46,18 @@ export default defineComponent({
     let { api } = injection<InjectionType>(INJECTIONS.API);
 
     let { isDefaultPosition, isAttackPosition } = usePositionChoose(cardZone);
-    let attack = async function () {
+    let togglePositon = async function () {
       try {
-        let zone = await new AttackUseCase(new DuelService(api.value)).zone(
-          cardZone.value,
-          props.index,
-          player
+        let zone = await new ChangeZoneUseCase(new DuelService(api.value)).zone(
+          {
+            cardZone: cardZone.value,
+            index: props.index,
+            player,
+            position:
+              cardZone.value.zone.position === CARD_POSITION.ATTACK
+                ? CARD_POSITION.DEFAULT
+                : CARD_POSITION.ATTACK,
+          }
         );
 
         changeUnitZone(zone, player, props.index);
@@ -64,12 +72,18 @@ export default defineComponent({
         "contextmenu",
         function (e: Event) {
           e.preventDefault();
-          attack();
+          togglePositon();
         },
         false
       );
     });
-    return { cardZone, isDefaultPosition, isAttackPosition, attack, zoneLink };
+    return {
+      cardZone,
+      isDefaultPosition,
+      isAttackPosition,
+      togglePositon,
+      zoneLink,
+    };
   },
 
   components: {
