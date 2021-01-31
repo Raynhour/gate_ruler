@@ -6,43 +6,43 @@ section(
   )
   preloader(v-if="loading" :data-test="DATA_TEST.DUEL.PRELOADER")
   .duel(v-if="duel")
-    Player1(:player="duel.player2" v-if="duel.player2").player2
+    //- Player1(:player="duel.player2" v-if="duel.player2").player2
     div.divider
     Player1(:player="duel.player1" v-if="duel.player1")
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, ref } from 'vue'
-import { InjectionType } from '@/utils/types'
-import useGame from '../composables/useGame'
-import { useRoute } from 'vue-router'
-import INJECTIONS from '@/utils/enums/injections.enum'
-import { DATA_TEST } from '@/utils/enums/elements.enum'
+import { defineComponent, inject, ref } from "vue";
+import { InjectionType } from "@/utils/types";
+import useGame from "../composables/useGame";
+import { useRoute } from "vue-router";
+import INJECTIONS from "@/utils/enums/injections.enum";
+import { DATA_TEST } from "@/utils/enums/elements.enum";
 
-import Preloader from '../components/duel/DuelPreloader.vue'
-import Player1 from '@/presentation/components/duel/Player1.vue'
-import Player2 from '@/presentation/components/duel/Player2.vue'
+import Preloader from "../components/duel/DuelPreloader.vue";
+import Player1 from "@/presentation/components/duel/Player1.vue";
+import Player2 from "@/presentation/components/duel/Player2.vue";
 
 export default defineComponent({
   setup() {
-    const inj = inject<InjectionType>(INJECTIONS.API)
+    const inj = inject<InjectionType>(INJECTIONS.API);
     if (!inj) {
-      throw new Error('err')
+      throw new Error("err");
     }
-    console.log(inj)
-    const route = useRoute()
-    const game = useGame(inj.api.value)
-    game.start(+route.params.id)
+    console.log(inj);
+    const route = useRoute();
+    const game = useGame(inj.api.value);
+    game.start(+route.params.id);
 
-    return { ...game, DATA_TEST: ref(DATA_TEST) }
+    return { ...game, DATA_TEST: ref(DATA_TEST) };
   },
 
   components: {
     preloader: Preloader,
     Player1,
-    Player2
-  }
-})
+    Player2,
+  },
+});
 </script>
 
 <style lang="scss">

@@ -1,5 +1,7 @@
 <template lang="pug">
-.zone(@click="$emit('click')") 
+.zone(
+  :class="{'zone_select-player1': player1Selected, 'zone_selected_player_2': player2Selected}"
+) 
   .zone__round
   .zone__field(
     :class="{'zone__field_default' : isDefaultPosition, 'zone__field_rest': isRestPosition}"
@@ -10,8 +12,8 @@
 </template>
 
 <script lang="ts">
-import { Card } from "@/domain/entities/core/Card"
-import { defineComponent, PropType } from "vue"
+import { Card } from "@/domain/entities/core/Card";
+import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   props: {
@@ -20,17 +22,13 @@ export default defineComponent({
     card: {
       type: Object as PropType<Card>,
       default: () => {
-        return {}
-      }
-    }
+        return {};
+      },
+    },
+    player1Selected: Boolean,
+    player2Selected: Boolean,
   },
-
-  methods: {
-    ales() {
-      alert('true')
-    }
-  }
-})
+});
 </script>
 
 <style lang="scss">
@@ -39,6 +37,9 @@ export default defineComponent({
   width: 100%;
   height: auto;
   padding-top: 100%;
+  &_select-player1 &__round {
+    border-color: red;
+  }
   &__round {
     position: absolute;
     top: 0;
@@ -60,7 +61,7 @@ export default defineComponent({
     border: 1px solid $primary;
     width: 60%;
     height: 75%;
-    
+
     // &_default {
     //   transform: perspective(50em) rotateX(40deg);
     // }
@@ -69,9 +70,9 @@ export default defineComponent({
     }
   }
   &__card {
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-    }
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+  }
 }
 </style>

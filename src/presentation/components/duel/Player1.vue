@@ -5,35 +5,47 @@ div.player
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
-import { View, VIEW_LAYOUT } from '@/domain/entities/core/view/view'
-import LayoutDefault from './layout/LayoutDefault.vue'
+import {
+  computed,
+  defineComponent,
+  PropType,
+  provide,
+  reactive,
+  readonly,
+  toRefs,
+} from "vue";
+import { View, VIEW_LAYOUT } from "@/domain/entities/core/view/view";
+import LayoutDefault from "./layout/LayoutDefault.vue";
+import INJECTIONS from "@/utils/enums/injections.enum";
+import api from "@/data/api/api";
 export default defineComponent({
   props: {
     player: {
       required: true,
-      type: Object as PropType<View>
-    }
+      type: Object as PropType<View>,
+    },
   },
 
   setup(props) {
+    const player = reactive({ player: props.player });
+    provide(INJECTIONS.PLAYER, toRefs(readonly(player)));
     let layout = computed(() => {
-      let base = `Layout`
+      let base = `Layout`;
       switch (props.player.layout) {
         case VIEW_LAYOUT.DEFAULT:
-          return `${base}Default`
+          return `${base}Default`;
 
         default:
-          return `${base}Default`
+          return `${base}Default`;
       }
-    })
-    return { layout }
+    });
+    return { layout };
   },
 
   components: {
-    LayoutDefault
-  }
-})
+    LayoutDefault,
+  },
+});
 </script>
 
 <style lang="scss">

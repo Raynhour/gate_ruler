@@ -21,50 +21,32 @@ export const UNIT_ZONE_SELECTED_PLAYER1_MOCK = {
   },
 };
 
-export const duel: Duel = {
-  player1: {
-    grave: {},
-    banish: {},
-    hand: [],
-    card_on_fields: [],
-    field: [],
-    trigger_zone: [],
-    deck: [],
-    energy: [],
-    ruler: {},
-    zone: {
-      attack: {
-        1: UNIT_ZONE_MOCK,
-        2: UNIT_ZONE_MOCK,
-      },
-      event: {
-        1: UNIT_ZONE_MOCK,
-      },
+export const PLAYER_VIEW_MOCK = {
+  grave: {},
+  banish: {},
+  hand: [],
+  card_on_fields: [],
+  field: [],
+  trigger_zone: [],
+  deck: [],
+  energy: [],
+  ruler: {},
+  zone: {
+    attack: {
+      1: UNIT_ZONE_MOCK,
+      2: UNIT_ZONE_MOCK,
     },
-    layout: VIEW_LAYOUT.DEFAULT,
+    event: {
+      1: UNIT_ZONE_MOCK,
+    },
   },
+  layout: VIEW_LAYOUT.DEFAULT,
+};
 
-  player2: {
-    grave: {},
-    banish: {},
-    hand: [],
-    card_on_fields: [],
-    field: [],
-    trigger_zone: [],
-    deck: [],
-    energy: [],
-    ruler: {},
-    zone: {
-      attack: {
-        1: UNIT_ZONE_MOCK,
-        2: UNIT_ZONE_MOCK,
-      },
-      event: {
-        1: UNIT_ZONE_MOCK,
-      },
-    },
-    layout: VIEW_LAYOUT.DEFAULT,
-  },
+export const duel: Duel = {
+  player1: PLAYER_VIEW_MOCK,
+
+  player2: PLAYER_VIEW_MOCK,
 
   turn: 0,
   id: 1,

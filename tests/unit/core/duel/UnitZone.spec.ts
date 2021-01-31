@@ -6,11 +6,16 @@ import INJECTIONS from "@/utils/enums/injections.enum";
 import instance from "@/data/api/initApi";
 import { GlobalMountOptions } from "@vue/test-utils/dist/types";
 import { Zone } from "@/domain/entities/core/zone";
-import { duel, UNIT_ZONE_MOCK_REST } from "../../../mocks/duel.mock";
+import {
+  duel,
+  UNIT_ZONE_MOCK_REST,
+  UNIT_ZONE_SELECTED_PLAYER1_MOCK,
+} from "../../../mocks/duel.mock";
 import flushPromises from "flush-promises";
 
-import { changeUnitZone } from "@/presentation/composables/useGame";
+import { changeUnitZone, PLAYERS } from "@/presentation/composables/useGame";
 import { CARD_POSITION } from "@/domain/entities/core/Card";
+import { nextTick } from "vue";
 
 jest.mock("@/presentation/composables/useGame", () => ({
   ...jest.requireActual("@/presentation/composables/useGame"),
@@ -49,17 +54,35 @@ describe("UnitZone.vue", () => {
     it("Zone selected", async () => {
       const wrapper = createWrapper();
       await wrapper.getComponent({ ref: "zoneLink" }).trigger("click");
-      let selectedZone = wrapper.find(".selected");
-      expect(selectedZone.exists()).toBe(true);
+      await flushPromises();
+      expect(changeUnitZone).toBeCalledWith(
+        expect.objectContaining({
+          selected: expect.objectContaining({
+            [PLAYERS.PLAYER1]: true,
+          }),
+        }),
+        changeZoneMock.mock.calls[0][1],
+        changeZoneMock.mock.calls[0][2]
+      );
     });
 
     describe("When click again", () => {
       it("Zone unselected", async () => {
-        const wrapper = createWrapper();
-        await wrapper.getComponent({ ref: "zoneLink" }).trigger("click");
-        await wrapper.getComponent({ ref: "zoneLink" }).trigger("click");
-        let selectedZone = wrapper.find(".selected");
-        expect(selectedZone.exists()).toBe(true);
+        const props = { zone: UNIT_ZONE_SELECTED_PLAYER1_MOCK };
+        const wrapper = createWrapper({}, props);
+
+        await wrapper.getComponent({ ref: "zoneLink" }).vm.$emit("click");
+        await flushPromises();
+
+        expect(changeUnitZone).toBeCalledWith(
+          expect.objectContaining({
+            selected: expect.objectContaining({
+              [PLAYERS.PLAYER1]: false,
+            }),
+          }),
+          changeZoneMock.mock.calls[0][1],
+          changeZoneMock.mock.calls[0][2]
+        );
       });
     });
   });
