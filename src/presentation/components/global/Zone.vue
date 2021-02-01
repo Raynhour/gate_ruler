@@ -6,9 +6,10 @@
   .zone__field(
     :class="{'zone__field_default' : isDefaultPosition, 'zone__field_rest': isRestPosition}"
   )
-    .zone__card(
-      :style="{backgroundImage: `url(${card.img})`}"
-    )
+    slot(name="field")
+    //- .zone__card(
+    //-   :style="{backgroundImage: `url(${card.img})`}"
+    //- )
 </template>
 
 <script lang="ts">

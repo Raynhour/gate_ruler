@@ -7,12 +7,24 @@ ZoneWrapper(
   :player2Selected="player2Selected"
   :card="zone.card"
   @click="selectHandler"
+  @mouseover="showPreview(zone.card)"
 )
+  template(v-slot:field="props")
+    .zone__card(
+      :style="{backgroundImage: `url(${zone.card.img})`}"
+    )
 </template>
 
 <script lang="ts">
 import { ANY_CARD } from "../../../../../tests/mocks/card.mock";
-import { computed, defineComponent, onMounted, PropType, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  PropType,
+  ref,
+  onRenderTracked,
+} from "vue";
 import CardZone, { Zone } from "@/domain/entities/core/zone";
 import ZoneWrapper from "../../global/Zone.vue";
 import usePositionChoose from "@/presentation/composables/usePositionChoose";
@@ -24,7 +36,7 @@ import INJECTIONS from "@/utils/enums/injections.enum";
 import { InjectionType } from "@/utils/types";
 import ChangeZoneUseCase from "@/domain/usecases/changeZonePosition.usecase";
 import { CARD_POSITION } from "@/domain/entities/core/Card";
-import * as _ from "lodash";
+import { showPreview } from "@/presentation/composables/usePreview";
 export default defineComponent({
   props: {
     index: {
@@ -41,11 +53,10 @@ export default defineComponent({
 
   setup(props) {
     const player = PLAYERS.PLAYER1;
-    console.log(_.deepClone);
     let cardZone = computed(() => {
       return new CardZone(props.zone);
     });
-
+    // onRenderTracked(() => console.log("render"));
     let { api } = injection<InjectionType>(INJECTIONS.API);
 
     let { isDefaultPosition, isAttackPosition } = usePositionChoose(cardZone);
@@ -73,7 +84,6 @@ export default defineComponent({
     };
     const zoneLink = ref<typeof ZoneWrapper>();
     onMounted(() => {
-      console.log(props.zone);
       if (!zoneLink.value) return;
       zoneLink.value.$el.addEventListener(
         "contextmenu",
@@ -92,6 +102,7 @@ export default defineComponent({
       zoneLink,
       ...select,
       selectHandler,
+      showPreview,
     };
   },
 

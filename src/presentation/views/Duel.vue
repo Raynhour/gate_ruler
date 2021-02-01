@@ -5,10 +5,13 @@ section(
   .game__bg(
   )
   preloader(v-if="loading" :data-test="DATA_TEST.DUEL.PRELOADER")
+  
   .duel(v-if="duel")
-    //- Player1(:player="duel.player2" v-if="duel.player2").player2
-    div.divider
-    Player1(:player="duel.player1" v-if="duel.player1")
+    preview
+    .duel__wrapper 
+      Player1(:player="duel.player2" v-if="duel.player2" currentPlayer="player2").player2
+      div.divider
+      Player1(:player="duel.player1" v-if="duel.player1" currentPlayer="player1")
 </template>
 
 <script lang="ts">
@@ -22,6 +25,7 @@ import { DATA_TEST } from "@/utils/enums/elements.enum";
 import Preloader from "../components/duel/DuelPreloader.vue";
 import Player1 from "@/presentation/components/duel/Player1.vue";
 import Player2 from "@/presentation/components/duel/Player2.vue";
+import Preview from "@/presentation/components/duel/Preview.vue";
 
 export default defineComponent({
   setup() {
@@ -41,34 +45,42 @@ export default defineComponent({
     preloader: Preloader,
     Player1,
     Player2,
+    Preview,
   },
 });
 </script>
 
 <style lang="scss">
 .duel {
+  display: flex;
   margin: 0 auto;
   width: 1024px;
   height: 100%;
+
+  &__wrapper {
+    width: 724px;
+  }
 }
 
 .game {
   height: 100vh;
-  &__bg {
-    // width: 100vw;
-    // height: 100vh;
-    // top: 50%;
-    // left: 50%;
-    // margin-top: -200vh;
-    // margin-left: -200vw;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-size: cover;
-    // animation: rotate 2000s linear infinite;
-  }
+  display: flex;
+  width: 100%;
+  // &__bg {
+  //   // width: 100vw;
+  //   // height: 100vh;
+  //   // top: 50%;
+  //   // left: 50%;
+  //   // margin-top: -200vh;
+  //   // margin-left: -200vw;
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   bottom: 0;
+  //   right: 0;
+  //   background-size: cover;
+  //   // animation: rotate 2000s linear infinite;
+  // }
 }
 
 .player2 {

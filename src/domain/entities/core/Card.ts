@@ -1,20 +1,23 @@
 export enum CARD_TYPE {
-  ANY = 'ANY',
-  UNIT = 'UNIT'
+  ANY = "ANY",
+  UNIT = "UNIT",
 }
 
 export enum CARD_POSITION {
-  ATTACK = 'ATTACK',
-  DEFAULT = 'DEFAULT'
+  ATTACK = "ATTACK",
+  DEFAULT = "DEFAULT",
 }
 
 export interface CardAttrs {
-  position?: CARD_POSITION
-  img?: string
+  position?: CARD_POSITION;
+  img?: string;
+  id: number;
+  effect: string;
+  name: string;
 }
 
 export interface Card extends CardAttrs {
-  category: CARD_TYPE
+  category: CARD_TYPE;
 }
 
 // export class AnyCard implements Card {
@@ -52,15 +55,15 @@ export interface Card extends CardAttrs {
 //   }
 // }
 export class Change {
-  readonly _card: Card
+  readonly _card: Card;
   constructor(card: Card) {
-    this._card = card
+    this._card = card;
   }
 
   card(attrs: CardAttrs): Card {
     return {
       ...this._card,
-      ...attrs
-    }
+      ...attrs,
+    };
   }
 }

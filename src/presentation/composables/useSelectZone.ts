@@ -1,14 +1,28 @@
 import apiContractor from "@/data/contractors/api.contractor";
 import DuelService from "@/data/services/__mocks__/duel.service";
+import { View } from "@/domain/entities/core/view/view";
 import CardZone, { Zone } from "@/domain/entities/core/zone";
 import SelectZoneUseCase from "@/domain/usecases/selectZone.usecase";
-import { computed, ComputedRef } from "vue";
-import { changeUnitZone, PLAYERS } from "./useGame";
+import INJECTIONS from "@/utils/enums/injections.enum";
+import { InjectionView } from "@/utils/types";
+import { injection } from "@/utils/vue.utils";
+import { computed, ComputedRef, toRaw } from "vue";
+import { changeUnitZone, changeView, PLAYERS } from "./useGame";
 
 export default function (cardZone: ComputedRef<CardZone>, api: apiContractor) {
+  const view = injection<View>(INJECTIONS.VIEW);
+  const currentPlayer = injection<PLAYERS>(INJECTIONS.CURRENT_PLAYER);
   const select = async (player: PLAYERS, index: number) => {
-    let select = new SelectZoneUseCase(new DuelService(api));
-    let zone = await select.zone({ cardZone: cardZone.value, player, index });
+    let selectUseCase = new SelectZoneUseCase(new DuelService(api));
+
+    let unselectedView = selectUseCase.unselectAll(toRaw(view), currentPlayer);
+    let zone = await selectUseCase.zone({
+      cardZone: cardZone.value,
+      index,
+      player: currentPlayer,
+    });
+
+    changeView(unselectedView, currentPlayer);
     changeUnitZone(zone, player, index);
   };
 

@@ -12,6 +12,7 @@ import {
   provide,
   reactive,
   readonly,
+  toRaw,
   toRefs,
 } from "vue";
 import { View, VIEW_LAYOUT } from "@/domain/entities/core/view/view";
@@ -24,11 +25,18 @@ export default defineComponent({
       required: true,
       type: Object as PropType<View>,
     },
+
+    currentPlayer: {
+      required: true,
+      type: String,
+    },
   },
 
   setup(props) {
     const player = reactive({ player: props.player });
-    provide(INJECTIONS.PLAYER, toRefs(readonly(player)));
+    provide(INJECTIONS.VIEW, toRaw(props.player));
+    provide(INJECTIONS.CURRENT_PLAYER, props.currentPlayer);
+
     let layout = computed(() => {
       let base = `Layout`;
       switch (props.player.layout) {
