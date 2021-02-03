@@ -1,10 +1,11 @@
-import { mount } from "@vue/test-utils";
+import { flushPromises, mount } from "@vue/test-utils";
 
-import Component from "@/presentation/components/duel/zone/UnitZone.vue";
+import Component from "@/presentation/components/duel/Deck.vue";
 import INJECTIONS from "@/utils/enums/injections.enum";
 import { GlobalMountOptions } from "@vue/test-utils/dist/types";
 import { duel } from "../../../mocks/duel.mock";
 import { PLAYERS } from "@/presentation/composables/useGame";
+import instance from "@/data/api/initApi";
 
 function createWrapper(
   overrides?: GlobalMountOptions | undefined,
@@ -16,6 +17,7 @@ function createWrapper(
       transition: false,
     },
     provide: {
+      [INJECTIONS.API]: { api: instance },
       [INJECTIONS.CURRENT_PLAYER]: PLAYERS.PLAYER1,
     },
   };
@@ -33,19 +35,22 @@ function createWrapper(
 
 describe("Deck.vue", () => {
   describe("When click on deck", () => {
-    it("Then draw a card", () => {
-      throw new Error("not implemented");
+    it("Then draw a card", async () => {
+      const wrapper = createWrapper();
+      await wrapper.getComponent({ ref: "deck" }).trigger("click");
+      await flushPromises();
+      expect(wrapper.emitted("topdeck")).toBeTruthy();
     });
   });
 
   describe("When mouse right click", () => {
-    it("Then show deck view", () => {
+    it.skip("Then show deck view", () => {
       throw new Error("not implemented");
     });
   });
 
   describe("When hover on deck", () => {
-    it("Then showing options menu", () => {
+    it.skip("Then showing options menu", () => {
       throw new Error("not implemented");
     });
   });
